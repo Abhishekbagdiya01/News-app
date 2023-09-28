@@ -1,16 +1,32 @@
-# news_app
+# News App
 
-A new Flutter project.
+This is a Flutter news app that fetches top headlines and detailed news from the NewsAPI.org API.
 
-## Getting Started
+## Screenshots
 
-This project is a starting point for a Flutter application.
+<img src="https://github.com/Abhishekbagdiya01/News-app/blob/master/screenshots/Screenshot%201.png" width=30% height=30%/>
+<img src="https://github.com/Abhishekbagdiya01/News-app/blob/master/screenshots/Screenshot%202.png" width=30% height=30%/>
 
-A few resources to get you started if this is your first Flutter project:
+## How to use
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Clone this repository.
+2. Run `flutter pub get` to install the dependencies.
+3. Create an account on NewsAPI.org and get your API key.
+4. Add your API key to the `api_key` variable in the `lib/services/news_api_service.dart` file.
+5. Run `flutter run` to start the app.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Features
+
+* View top headlines from various news categories.
+* Read detailed news articles.
+* Share news articles with friends and family.
+
+## Requirements
+
+* Flutter SDK
+* Dart SDK
+* NewsAPI.org account and API key
+
+## License
+
+This project is licensed under the MIT License.
