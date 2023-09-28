@@ -78,7 +78,10 @@ class NewsScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                Text(snapshot.data!.articles![index].url)
+                Text(
+                  snapshot.data!.articles![index].url,
+                  style: TextStyle(color: Colors.blue),
+                )
               ],
             ),
           )
