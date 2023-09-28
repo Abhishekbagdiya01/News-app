@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:news_app/models/news_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:news_app/api/services.dart';
+
 import 'package:news_app/views/news_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,24 +12,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<NewsModel> fetchNews() async {
-    final url =
-        "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=e07033cdb6d54aa6bc21490cf0106bf2";
-    var response = await http.get(Uri.parse(url));
-
-    if (response.statusCode == 200) {
-      final result = jsonDecode(response.body);
-      return NewsModel.fromJson(result);
-    } else {
-      return NewsModel();
-    }
-  }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchNews();
   }
 
   @override
@@ -45,39 +31,42 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
       ),
       body: FutureBuilder(
-          future: fetchNews(),
+          future: Services().fetchNews(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
                 itemCount: snapshot.data!.articles!.length,
-                itemBuilder: (context, index) => ListTile(
-                  leading: CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      radius: 50,
-                      child: Hero(
-                        tag: index,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
-                          child: snapshot.data!.articles![index].urlToImage ==
-                                  null
-                              ? Text("N/A")
-                              : Image.network(
-                                  "${snapshot.data!.articles![index].urlToImage}"),
-                        ),
-                      )),
-                  title: Text("${snapshot.data!.articles![index].title}"),
-                  subtitle:
-                      Text("${snapshot.data!.articles![index].description}"),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NewsScreen(
-                            snapshot: snapshot,
-                            index: index,
+                itemBuilder: (context, index) => Card(
+                  elevation: 1,
+                  child: ListTile(
+                    leading: CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        radius: 50,
+                        child: Hero(
+                          tag: index,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: snapshot.data!.articles![index].urlToImage ==
+                                    null
+                                ? Text("N/A")
+                                : Image.network(
+                                    "${snapshot.data!.articles![index].urlToImage}"),
                           ),
-                        ));
-                  },
+                        )),
+                    title: Text("${snapshot.data!.articles![index].title}"),
+                    subtitle:
+                        Text("${snapshot.data!.articles![index].description}"),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NewsScreen(
+                              snapshot: snapshot,
+                              index: index,
+                            ),
+                          ));
+                    },
+                  ),
                 ),
               );
             } else if (snapshot.hasError) {

@@ -7,66 +7,75 @@ class NewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
-      ),
       body: ListView(
         children: [
-          Hero(
-              tag: index,
-              child: snapshot.data!.articles![index].urlToImage == null
-                  ? Text("N/A")
-                  : Image.network(snapshot.data!.articles![index].urlToImage)),
-          SizedBox(
+          Stack(children: [
+            Hero(
+                tag: index,
+                child: snapshot.data!.articles![index].urlToImage == null
+                    ? const Text("N/A")
+                    : Image.network(
+                        snapshot.data!.articles![index].urlToImage)),
+            Positioned(
+              top: 10,
+              child: Chip(
+                label: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.arrow_back)),
+              ),
+            ),
+          ]),
+          const SizedBox(
             height: 10,
           ),
           Container(
-            padding: EdgeInsets.only(left: 15),
+            padding: const EdgeInsets.only(left: 15),
             child: Column(
               children: [
                 Text(
                   snapshot.data!.articles![index].title,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 snapshot.data!.articles![index].description == null
-                    ? Text("N/A")
+                    ? const Text("N/A")
                     : Text(
                         snapshot.data!.articles![index].description,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 15,
                         ),
                       ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 snapshot.data!.articles![index].content == null
-                    ? Text("N/A")
+                    ? const Text("N/A")
                     : Text(
                         snapshot.data!.articles![index].content,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 15,
                         ),
                       ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text("Author : ${snapshot.data!.articles![index].author}",
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                SizedBox(
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.bold)),
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
                     "Publish At ${snapshot.data!.articles![index].publishedAt}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 15,
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(snapshot.data!.articles![index].url)
